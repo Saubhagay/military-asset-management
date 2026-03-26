@@ -55,6 +55,36 @@ function Login({ setUser }) {
         </div>
         <button type="submit" className="login-btn">Login</button>
       </form>
+
+      <div style={{ marginTop: '20px', padding: '15px', backgroundColor: '#f0f4f8', borderRadius: '6px', fontSize: '13px' }}>
+        <strong>Test Credentials:</strong>
+        <table style={{ width: '100%', marginTop: '8px', borderCollapse: 'collapse' }}>
+          <thead>
+            <tr style={{ borderBottom: '1px solid #ccc' }}>
+              <th style={{ textAlign: 'left', padding: '4px' }}>Role</th>
+              <th style={{ textAlign: 'left', padding: '4px' }}>Username</th>
+              <th style={{ textAlign: 'left', padding: '4px' }}>Password</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style={{ padding: '4px' }}>Admin</td>
+              <td style={{ padding: '4px' }}><code>admin</code></td>
+              <td style={{ padding: '4px' }}><code>admin123</code></td>
+            </tr>
+            <tr>
+              <td style={{ padding: '4px' }}>Base Commander</td>
+              <td style={{ padding: '4px' }}><code>commander_alpha</code></td>
+              <td style={{ padding: '4px' }}><code>commander123</code></td>
+            </tr>
+            <tr>
+              <td style={{ padding: '4px' }}>Logistics Officer</td>
+              <td style={{ padding: '4px' }}><code>logistics_bravo</code></td>
+              <td style={{ padding: '4px' }}><code>logistics123</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
