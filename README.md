@@ -1,70 +1,118 @@
-# Getting Started with Create React App
+# Military Asset Management System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack web application to manage military assets like vehicles, weapons, and ammunition across multiple bases. Built with **React**, **Node.js**, **Express**, and **MongoDB**.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Features
+- **Dashboard**: View all asset balances across bases, with filtering by base and a pop-up for asset details.
+- **Purchases**: Record new asset purchases which automatically update asset balances.
+- **Transfers**: Move assets between bases with quantity validation.
+- **Assignments / Expenditures**: Assign or expend assets to units or personnel.
+- **Role-Based Access Control (RBAC)**:
+  - **Admin**: Full access to all bases and all features.
+  - **Base Commander**: Can view and manage assets only for their assigned base.
+  - **Logistics Officer**: Can purchase and manage assets only for their assigned base.
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Project Structure
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```
+military-asset-management/    ← React frontend
+├── src/
+│   ├── components/
+│   │   ├── Login.js
+│   │   ├── Navbar.js
+│   │   ├── Dashboard.js
+│   │   ├── Purchases.js
+│   │   ├── Transfers.js
+│   │   └── Assignments.js
+│   ├── App.js
+│   └── index.css
+└── public/
 
-### `npm test`
+backend/                      ← Node.js backend
+├── models/
+│   ├── user.js
+│   ├── asset.js
+│   ├── purchase.js
+│   ├── transfer.js
+│   └── assignment.js
+├── routes/
+│   ├── auth.js
+│   ├── assets.js
+│   ├── purchases.js
+│   ├── transfers.js
+│   └── assignments.js
+├── middleware/
+│   └── auth.js
+├── index.js
+├── seed.js
+└── .env
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## Tech Stack
+| Layer     | Technology                       |
+|-----------|----------------------------------|
+| Frontend  | React, Axios, React Router DOM   |
+| Backend   | Node.js, Express.js              |
+| Database  | MongoDB (via Mongoose)           |
+| Auth      | JWT (JSON Web Tokens)            |
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Setup Instructions
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Prerequisites
+- Node.js installed
+- A free MongoDB Atlas account ([mongodb.com/cloud/atlas](https://www.mongodb.com/cloud/atlas))
 
-### `npm run eject`
+### Step 1: Configure MongoDB
+1. Create a free cluster on MongoDB Atlas.
+2. Get your connection string (it looks like `mongodb+srv://...`).
+3. Open `backend/.env` and replace `<username>` and `<password>` with your credentials.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Step 2: Start the Backend
+```bash
+cd backend
+npm install
+node seed.js     # Creates default test users (run once)
+npm start        # Starts server on http://localhost:5000
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Step 3: Start the Frontend
+```bash
+# In the root project folder:
+npm install
+npm start        # Opens app at http://localhost:3000
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Login Credentials (after running seed.js)
 
-## Learn More
+| Role              | Username          | Password      |
+|-------------------|-------------------|---------------|
+| Admin             | `admin`           | `admin123`    |
+| Base Commander    | `commander_alpha` | `commander123`|
+| Logistics Officer | `logistics_bravo` | `logistics123`|
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## API Endpoints
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+| Method | Route                     | Description              | Access            |
+|--------|---------------------------|--------------------------|-------------------|
+| POST   | /api/auth/register        | Register a new user      | Public            |
+| POST   | /api/auth/login           | Login                    | Public            |
+| GET    | /api/assets               | Get all assets           | All roles         |
+| GET    | /api/assets/:base         | Get assets for one base  | Admin             |
+| POST   | /api/purchases            | Record a purchase        | Admin, Logistics  |
+| GET    | /api/purchases            | Get all purchases        | All roles         |
+| POST   | /api/transfers            | Transfer assets          | All roles         |
+| GET    | /api/transfers            | Get all transfers        | All roles         |
+| POST   | /api/assignments          | Assign/expend assets     | All roles         |
+| GET    | /api/assignments          | Get all assignments      | All roles         |
