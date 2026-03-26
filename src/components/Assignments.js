@@ -19,7 +19,7 @@ function Assignments({ user }) {
   const fetchAssignments = async () => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      const response = await axios.get('http://localhost:5000/api/assignments', config);
+      const response = await axios.get('https://military-asset-management-po5d.onrender.com/api/assignments', config);
       setAssignments(response.data);
     } catch (error) {
       console.error('Error fetching assignments', error);
@@ -29,7 +29,7 @@ function Assignments({ user }) {
   const fetchAssets = async () => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      let url = 'http://localhost:5000/api/assets';
+      let url = 'https://military-asset-management-po5d.onrender.com/api/assets';
       if (user.role === 'Admin' && formData.base) {
          url += `/${formData.base}`;
       }
@@ -52,7 +52,7 @@ function Assignments({ user }) {
     e.preventDefault();
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      await axios.post('http://localhost:5000/api/assignments', formData, config);
+      await axios.post('https://military-asset-management-po5d.onrender.com/api/assignments', formData, config);
       alert('Assignment recorded successfully!');
       fetchAssignments();
       fetchAssets();

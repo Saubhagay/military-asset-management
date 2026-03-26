@@ -14,7 +14,7 @@ function Dashboard({ user }) {
   const fetchAssets = async () => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      let url = 'http://localhost:5000/api/assets';
+      let url = 'https://military-asset-management-po5d.onrender.com/api/assets';
       
       if (user.role === 'Admin' && filterBase) {
         url += `/${filterBase}`;

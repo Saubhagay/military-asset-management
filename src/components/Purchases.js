@@ -18,7 +18,7 @@ function Purchases({ user }) {
   const fetchPurchases = async () => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      const response = await axios.get('http://localhost:5000/api/purchases', config);
+      const response = await axios.get('https://military-asset-management-po5d.onrender.com/api/purchases', config);
       setPurchases(response.data);
     } catch (error) {
       console.error('Error fetching purchases', error);
@@ -33,7 +33,7 @@ function Purchases({ user }) {
     e.preventDefault();
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      await axios.post('http://localhost:5000/api/purchases', formData, config);
+      await axios.post('https://military-asset-management-po5d.onrender.com/api/purchases', formData, config);
       alert('Purchase recorded successfully!');
       fetchPurchases();
       // Reset form quantity

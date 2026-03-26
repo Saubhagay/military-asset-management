@@ -20,7 +20,7 @@ function Transfers({ user }) {
   const fetchTransfers = async () => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      const response = await axios.get('http://localhost:5000/api/transfers', config);
+      const response = await axios.get('https://military-asset-management-po5d.onrender.com/api/transfers', config);
       setTransfers(response.data);
     } catch (error) {
       console.error('Error fetching transfers', error);
@@ -30,7 +30,7 @@ function Transfers({ user }) {
   const fetchAssets = async () => {
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      let url = 'http://localhost:5000/api/assets';
+      let url = 'https://military-asset-management-po5d.onrender.com/api/assets';
       if (user.role === 'Admin' && formData.fromBase) {
         url += `/${formData.fromBase}`;
       }
@@ -58,7 +58,7 @@ function Transfers({ user }) {
 
     try {
       const config = { headers: { Authorization: `Bearer ${user.token}` } };
-      await axios.post('http://localhost:5000/api/transfers', formData, config);
+      await axios.post('https://military-asset-management-po5d.onrender.com/api/transfers', formData, config);
       alert('Transfer recorded successfully!');
       fetchTransfers();
       fetchAssets();
